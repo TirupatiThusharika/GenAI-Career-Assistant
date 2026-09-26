@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GenAI Career Assistant</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #07111f;
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #17283d;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #4da6ff;
+        }
+
+        nav a {
+            color: #c7d4e3;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            color: #4da6ff;
+        }
+
+        /* HERO */
+
+        .hero {
+            text-align: center;
+            padding: 90px 20px 60px;
+        }
+
+        .hero h1 {
+            font-size: 55px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #4da6ff;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: auto;
+            color: #9caec4;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        /* UPLOAD */
+
+        .upload-section {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto 80px;
+            background: #101d2f;
+            border: 1px solid #1d3552;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .upload-section h2 {
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .upload-section p {
+            color: #9caec4;
+            margin-bottom: 25px;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            background: #4da6ff;
+            color: #07111f;
+            padding: 13px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+
+        .upload-btn:hover {
+            background: #78bcff;
+        }
+
+        .file-name {
+            color: #9caec4;
+            margin: 10px 0 20px;
+            font-size: 14px;
+        }
+
+        .upload-submit {
+            display: block;
+            margin: auto;
+            border: none;
+            background: #172d47;
+            color: white;
+            padding: 13px 28px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .upload-submit:hover {
+            background: #23476d;
+        }
+
+        .upload-submit:disabled {
+            opacity: 0.7;
+            cursor: wait;
+        }
+
+        /* FEATURES */
+
+        .section {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto 80px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #9caec4;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: #101d2f;
+            border: 1px solid #1d3552;
+            padding: 25px;
+            border-radius: 16px;
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #4da6ff;
+        }
+
+        .feature-card .icon {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #9caec4;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* HOW IT WORKS */
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .step-number {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: #4da6ff;
+            color: #07111f;
+            font-weight: bold;
+        }
+
+        .step p {
+            color: #9caec4;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        /* ABOUT */
+
+        .about {
+            max-width: 850px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .about p {
+            color: #9caec4;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* TECH STACK */
+
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .tech {
+            padding: 10px 18px;
+            border: 1px solid #1d3552;
+            border-radius: 20px;
+            background: #101d2f;
+            color: #c7d4e3;
+        }
+
+        /* FOOTER */
+
+        footer {
+            border-top: 1px solid #17283d;
+            text-align: center;
+            padding: 30px;
+            color: #71849b;
+            font-size: 14px;
+        }
+
+        /* LOADING OVERLAY */
+
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(7, 17, 31, 0.97);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-box {
+            text-align: center;
+            width: 90%;
+            max-width: 450px;
+        }
+
+        .loader {
+            width: 55px;
+            height: 55px;
+            border: 5px solid #1d3552;
+            border-top: 5px solid #4da6ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 25px;
+        }
+
+        .loading-box h2 {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .loading-box p {
+            color: #9caec4;
+        }
+
+        @keyframes spin {
+
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 900px) {
+
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero h1 {
+                font-size: 45px;
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            nav {
+                padding: 18px 5%;
+            }
+
+            nav div:last-child {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 60px;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .upload-section {
+                padding: 30px 20px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <div class="logo">
+            GenAI Career
+        </div>
+
+        <div>
+
+            <a href="#home">Home</a>
+
+            <a href="#features">Features</a>
+
+            <a href="#about">About</a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- HERO -->
+
+    <section class="hero" id="home">
+
+        <h1>
+            Build Your Career<br>
+            With <span>AI.</span>
+        </h1>
+
+        <p>
+            Upload your resume and let AI analyze your skills,
+            identify career opportunities, discover skill gaps,
+            and create a personalized learning roadmap.
+        </p>
+
+    </section>
+
+
+
+    <!-- UPLOAD SECTION -->
+
+    <section class="upload-section">
+
+        <h2>Analyze Your Resume</h2>
+
+        <p>
+            Upload your resume in PDF format to get personalized AI insights.
+        </p>
+
+
+        <form
+            action="/upload"
+            method="POST"
+            enctype="multipart/form-data"
+            id="upload-form"
+        >
+
+            <label
+                for="resume"
+                class="upload-btn"
+            >
+                Choose Resume
+            </label>
+
+
+            <input
+                type="file"
+                id="resume"
+                name="resume"
+                accept=".pdf"
+                hidden
+                required
+            >
+
+
+            <p
+                id="file-name"
+                class="file-name"
+            >
+                No file selected
+            </p>
+
+
+            <button
+                type="submit"
+                class="upload-submit"
+            >
+                Upload Resume →
+            </button>
+
+        </form>
+
+    </section>
+
+
+
+    <!-- FEATURES -->
+
+    <section class="section" id="features">
+
+        <div class="section-title">
+
+            <h2>What AI Can Do For You</h2>
+
+            <p>
+                Turn your resume into actionable career insights.
+            </p>
+
+        </div>
+
+
+        <div class="features">
+
+
+            <div class="feature-card">
+
+                <div class="icon">📄</div>
+
+                <h3>Resume Analysis</h3>
+
+                <p>
+                    AI analyzes your education,
+                    technical skills and experience.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="icon">🎯</div>
+
+                <h3>Career Recommendations</h3>
+
+                <p>
+                    Discover career roles that match
+                    your current profile.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="icon">📊</div>
+
+                <h3>Skill Gap Analysis</h3>
+
+                <p>
+                    Identify important skills you
+                    should improve for your target roles.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="icon">🗺️</div>
+
+                <h3>Learning Roadmap</h3>
+
+                <p>
+                    Get a practical step-by-step
+                    roadmap for your career growth.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- HOW IT WORKS -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <h2>How It Works</h2>
+
+            <p>
+                Three simple steps to understand your career path.
+            </p>
+
+        </div>
+
+
+        <div class="steps">
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    1
+                </div>
+
+                <h3>Upload</h3>
+
+                <p>
+                    Upload your resume as a PDF.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    2
+                </div>
+
+                <h3>Analyze</h3>
+
+                <p>
+                    Gemini AI analyzes your resume.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    3
+                </div>
+
+                <h3>Improve</h3>
+
+                <p>
+                    Follow your personalized career roadmap.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ABOUT -->
+
+    <section class="section" id="about">
+
+        <div class="section-title">
+
+            <h2>About The Project</h2>
+
+        </div>
+
+
+        <div class="about">
+
+            <p>
+                GenAI Career Assistant is an AI-powered career
+                guidance application that analyzes resumes and
+                provides personalized career insights. It uses
+                Python, Flask, PDF processing and Gemini AI to
+                transform resume information into useful career
+                recommendations.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- TECH STACK -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <h2>Built With</h2>
+
+        </div>
+
+
+        <div class="tech-stack">
+
+            <div class="tech">Python</div>
+
+            <div class="tech">Flask</div>
+
+            <div class="tech">Gemini AI</div>
+
+            <div class="tech">PyMuPDF</div>
+
+            <div class="tech">HTML</div>
+
+            <div class="tech">CSS</div>
+
+            <div class="tech">JavaScript</div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        © 2026 GenAI Career Assistant
+
+    </footer>
+
+
+
+    <!-- LOADING SCREEN -->
+
+    <div
+        class="loading-overlay"
+        id="loading-overlay"
+    >
+
+        <div class="loading-box">
+
+            <div class="loader"></div>
+
+            <h2>
+                🤖 Analyzing Your Resume
+            </h2>
+
+            <p>
+                Gemini AI is preparing your personalized career insights...
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        const resumeInput =
+            document.getElementById("resume");
+
+        const fileName =
+            document.getElementById("file-name");
+
+        const uploadForm =
+            document.getElementById("upload-form");
+
+        const uploadButton =
+            document.querySelector(".upload-submit");
+
+        const loadingOverlay =
+            document.getElementById("loading-overlay");
+
+
+        // Show selected file name
+
+        resumeInput.addEventListener(
+            "change",
+            function () {
+
+                if (resumeInput.files.length > 0) {
+
+                    fileName.textContent =
+                        resumeInput.files[0].name;
+
+                } else {
+
+                    fileName.textContent =
+                        "No file selected";
+
+                }
+
+            }
+        );
+
+
+        // Show loading screen
+
+        uploadForm.addEventListener(
+            "submit",
+            function () {
+
+                if (resumeInput.files.length === 0) {
+                    return;
+                }
+
+                uploadButton.disabled = true;
+
+                uploadButton.textContent =
+                    "Analyzing Resume...";
+
+                loadingOverlay.style.display =
+                    "flex";
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

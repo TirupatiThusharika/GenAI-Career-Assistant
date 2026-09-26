@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Resume Analysis</title>
+
+
+<style>
+
+/* ------------------------------
+   BASIC RESET
+------------------------------ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* ------------------------------
+   BODY
+------------------------------ */
+
+body {
+
+    font-family: Arial, sans-serif;
+
+    background: #07111f;
+
+    color: white;
+
+    min-height: 100vh;
+}
+
+
+/* ------------------------------
+   MAIN CONTAINER
+------------------------------ */
+
+.container {
+
+    width: 90%;
+
+    max-width: 1150px;
+
+    margin: auto;
+
+    padding: 50px 0;
+}
+
+
+/* ------------------------------
+   HEADER
+------------------------------ */
+
+.header {
+
+    text-align: center;
+
+    margin-bottom: 35px;
+}
+
+
+.header h1 {
+
+    font-size: 42px;
+
+    margin-bottom: 12px;
+}
+
+
+.header h1 span {
+
+    color: #4da6ff;
+}
+
+
+.header p {
+
+    color: #9caec4;
+
+    font-size: 17px;
+}
+
+
+.resume-name {
+
+    margin-top: 10px;
+
+    font-size: 14px !important;
+}
+
+
+/* ------------------------------
+   RESUME SCORE
+------------------------------ */
+
+.score-card {
+
+    background: #101d2f;
+
+    border: 1px solid #1d3552;
+
+    border-radius: 20px;
+
+    padding: 35px;
+
+    margin-bottom: 25px;
+
+    text-align: center;
+
+    transition: 0.3s;
+}
+
+
+.score-card:hover {
+
+    transform: translateY(-4px);
+
+    border-color: #4da6ff;
+}
+
+
+.score-card h2 {
+
+    color: #4da6ff;
+
+    margin-bottom: 20px;
+
+    font-size: 24px;
+}
+
+
+/* ------------------------------
+   SCORE NUMBER
+------------------------------ */
+
+.score {
+
+    font-size: 65px;
+
+    font-weight: bold;
+
+    color: #4da6ff;
+
+    margin-bottom: 10px;
+}
+
+
+.score span {
+
+    font-size: 22px;
+
+    color: #9caec4;
+}
+
+
+/* ------------------------------
+   SCORE EXPLANATION
+------------------------------ */
+
+.score-reason {
+
+    max-width: 700px;
+
+    margin: 15px auto 0;
+
+    color: #d6e1ee;
+
+    line-height: 1.6;
+
+    font-size: 16px;
+}
+
+
+/* ------------------------------
+   CARDS GRID
+------------------------------ */
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 22px;
+}
+
+
+/* ------------------------------
+   CARD
+------------------------------ */
+
+.card {
+
+    background: #101d2f;
+
+    border: 1px solid #1d3552;
+
+    border-radius: 18px;
+
+    padding: 28px;
+
+    transition: 0.3s;
+}
+
+
+.card:hover {
+
+    transform: translateY(-4px);
+
+    border-color: #4da6ff;
+}
+
+
+/* ------------------------------
+   CARD TITLE
+------------------------------ */
+
+.card h2 {
+
+    color: #4da6ff;
+
+    margin-bottom: 20px;
+
+    font-size: 21px;
+}
+
+
+/* ------------------------------
+   LIST
+------------------------------ */
+
+.card ul {
+
+    list-style: none;
+}
+
+
+.card li {
+
+    color: #d6e1ee;
+
+    line-height: 1.6;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #1d2d42;
+}
+
+
+.card li:last-child {
+
+    border-bottom: none;
+}
+
+
+/* ------------------------------
+   BULLET
+------------------------------ */
+
+.card li::before {
+
+    content: "•";
+
+    color: #4da6ff;
+
+    font-weight: bold;
+
+    margin-right: 10px;
+}
+
+
+/* ------------------------------
+   FULL WIDTH CARD
+------------------------------ */
+
+.full-width {
+
+    grid-column: 1 / -1;
+}
+
+
+/* ------------------------------
+   BACK BUTTON
+------------------------------ */
+
+.back-btn {
+
+    display: inline-block;
+
+    margin-top: 35px;
+
+    padding: 13px 25px;
+
+    background: #4da6ff;
+
+    color: #07111f;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+
+.back-btn:hover {
+
+    background: #78bcff;
+
+    transform: translateY(-2px);
+}
+
+
+/* ------------------------------
+   MOBILE RESPONSIVE
+------------------------------ */
+
+@media (max-width: 750px) {
+
+    .grid {
+
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+
+        grid-column: auto;
+    }
+
+    .header h1 {
+
+        font-size: 32px;
+    }
+
+    .score {
+
+        font-size: 52px;
+    }
+
+    .container {
+
+        width: 92%;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>
+            🤖 AI Resume <span>Analysis</span>
+        </h1>
+
+        <p>
+            Personalized career insights powered by Gemini AI
+        </p>
+
+        <p class="resume-name">
+            Resume: {{ filename }}
+        </p>
+
+    </div>
+
+
+
+    <!-- RESUME SCORE -->
+
+    <div class="score-card">
+
+        <h2>
+            📊 Your Resume Score
+        </h2>
+
+        <div class="score">
+
+            {{ analysis.resume_score }}
+
+            <span>/100</span>
+
+        </div>
+
+        <p class="score-reason">
+
+            {{ analysis.score_reason }}
+
+        </p>
+
+    </div>
+
+
+
+    <!-- ANALYSIS CARDS -->
+
+    <div class="grid">
+
+
+        <!-- EDUCATION -->
+
+        <div class="card">
+
+            <h2>
+                🎓 Education
+            </h2>
+
+            <ul>
+
+                {% for item in analysis.education %}
+
+                <li>
+                    {{ item }}
+                </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+
+
+        <!-- SKILLS -->
+
+        <div class="card">
+
+            <h2>
+                💻 Technical Skills
+            </h2>
+
+            <ul>
+
+                {% for item in analysis.skills %}
+
+                <li>
+                    {{ item }}
+                </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+
+
+        <!-- EXPERIENCE -->
+
+        <div class="card">
+
+            <h2>
+                💼 Work Experience
+            </h2>
+
+            <ul>
+
+                {% for item in analysis.experience %}
+
+                <li>
+                    {{ item }}
+                </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+
+
+        <!-- RECOMMENDED ROLES -->
+
+        <div class="card">
+
+            <h2>
+                🎯 Recommended Career Roles
+            </h2>
+
+            <ul>
+
+                {% for item in analysis.recommended_roles %}
+
+                <li>
+                    {{ item }}
+                </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+
+
+        <!-- SKILL GAPS -->
+
+        <div class="card">
+
+            <h2>
+                📊 Skill Gaps
+            </h2>
+
+            <ul>
+
+                {% for item in analysis.skill_gaps %}
+
+                <li>
+                    {{ item }}
+                </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+
+
+        <!-- LEARNING ROADMAP -->
+
+        <div class="card full-width">
+
+            <h2>
+                🗺️ Learning Roadmap
+            </h2>
+
+            <ul>
+
+                {% for item in analysis.learning_roadmap %}
+
+                <li>
+                    {{ item }}
+                </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- BACK BUTTON -->
+
+    <a href="/" class="back-btn">
+
+        ← Analyze Another Resume
+
+    </a>
+
+
+</div>
+
+
+</body>
+
+</html>
